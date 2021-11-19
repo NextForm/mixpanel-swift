@@ -223,7 +223,7 @@ open class MixpanelInstance: CustomDebugStringConvertible, FlushDelegate, AEDele
         
         self.name = name
         readWriteLock = ReadWriteLock(label: "com.mixpanel.globallock")
-        flushInstance = Flush(basePathIdentifier: name)
+        flushInstance = Flush(basePathIdentifier: name, token: apiToken)
         #if DECIDE
         decideInstance = Decide(basePathIdentifier: name, lock: readWriteLock, mixpanelPersistence: mixpanelPersistence)
         #endif // DECIDE

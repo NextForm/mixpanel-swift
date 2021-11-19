@@ -42,8 +42,9 @@ class Flush: AppLifecycle {
         }
     }
 
-    required init(basePathIdentifier: String) {
+    required init(basePathIdentifier: String, token: String? = nil) {
         self.flushRequest = FlushRequest(basePathIdentifier: basePathIdentifier)
+        self.flushRequest.token = token
         flushIntervalReadWriteLock = DispatchQueue(label: "com.mixpanel.flush_interval.lock", qos: .utility, attributes: .concurrent)
     }
 

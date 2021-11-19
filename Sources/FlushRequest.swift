@@ -18,6 +18,7 @@ class FlushRequest: Network {
 
     var networkRequestsAllowedAfterTime = 0.0
     var networkConsecutiveFailures = 0
+    var token: String? = nil
 
     func sendRequest(_ requestData: String,
                      type: FlushType,
@@ -35,10 +36,14 @@ class FlushRequest: Network {
         let requestBody = "ip=\(useIP ? 1 : 0)&data=\(requestData)"
             .data(using: String.Encoding.utf8)
 
+        var headers = ["Accept-Encoding": "gzip", "Authorization": "Bearer \(token ?? "")"]
+        if let token = token {
+            headers["Authorization"] = "Bearer \(token)"
+        }
         let resource = Network.buildResource(path: type.rawValue,
                                              method: .post,
                                              requestBody: requestBody,
-                                             headers: ["Accept-Encoding": "gzip"],
+                                             headers: headers,
                                              parse: responseParser)
 
         flushRequestHandler(BasePath.getServerURL(identifier: basePathIdentifier),
