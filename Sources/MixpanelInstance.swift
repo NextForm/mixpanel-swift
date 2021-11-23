@@ -47,6 +47,13 @@ protocol AppLifecycle {
 open class MixpanelInstance: CustomDebugStringConvertible, FlushDelegate, AEDelegate {
     /// apiToken string that identifies the project to track data to
     open var apiToken = ""
+
+    /// Additional token to be added to request headers as Authorization
+    var appToken = "" {
+        didSet {
+            flushInstance.appToken = appToken
+        }
+    }
     
     /// The a MixpanelDelegate object that gives control over Mixpanel network activity.
     open weak var delegate: MixpanelDelegate?
@@ -223,7 +230,7 @@ open class MixpanelInstance: CustomDebugStringConvertible, FlushDelegate, AEDele
         
         self.name = name
         readWriteLock = ReadWriteLock(label: "com.mixpanel.globallock")
-        flushInstance = Flush(basePathIdentifier: name, token: apiToken)
+        flushInstance = Flush(basePathIdentifier: name)
         #if DECIDE
         decideInstance = Decide(basePathIdentifier: name, lock: readWriteLock, mixpanelPersistence: mixpanelPersistence)
         #endif // DECIDE
