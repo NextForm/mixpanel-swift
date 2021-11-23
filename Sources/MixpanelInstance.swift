@@ -49,7 +49,7 @@ open class MixpanelInstance: CustomDebugStringConvertible, FlushDelegate, AEDele
     open var apiToken = ""
 
     /// Additional token to be added to request headers as Authorization
-    var appToken = "" {
+    open var appToken = "" {
         didSet {
             flushInstance.appToken = appToken
         }
