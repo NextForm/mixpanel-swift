@@ -24,6 +24,7 @@ class Flush: AppLifecycle {
     var flushRequest: FlushRequest
     var flushOnBackground = true
     var _flushInterval = 0.0
+    var apiKey: String? = nil
     var appToken: String? = nil
 
     private let flushIntervalReadWriteLock: DispatchQueue
@@ -110,6 +111,7 @@ class Flush: AppLifecycle {
                 flushRequest.sendRequest(requestData,
                                          type: type,
                                          useIP: useIPAddressForGeoLocation,
+                                         apiKey: apiKey,
                                          appToken: appToken,
                                          completion: { [weak self, semaphore] success in
                                             guard let self = self else { return }

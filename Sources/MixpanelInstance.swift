@@ -48,6 +48,13 @@ open class MixpanelInstance: CustomDebugStringConvertible, FlushDelegate, AEDele
     /// apiToken string that identifies the project to track data to
     open var apiToken = ""
 
+    /// Additional key to be added to request headers as Authorization
+    open var apiKey = "" {
+        didSet {
+            flushInstance.apiKey = apiKey
+        }
+    }
+
     /// Additional token to be added to request headers as Authorization
     open var appToken = "" {
         didSet {

@@ -22,6 +22,7 @@ class FlushRequest: Network {
     func sendRequest(_ requestData: String,
                      type: FlushType,
                      useIP: Bool,
+                     apiKey: String? = nil,
                      appToken: String? = nil,
                      completion: @escaping (Bool) -> Void) {
 
@@ -37,6 +38,9 @@ class FlushRequest: Network {
             .data(using: String.Encoding.utf8)
 
         var headers = ["Accept-Encoding": "gzip"]
+        if let apiKey = apiKey {
+            headers["nf-api"] = apiKey
+        }
         if let appToken = appToken {
             headers["Authorization"] = "Bearer \(appToken)"
         }
